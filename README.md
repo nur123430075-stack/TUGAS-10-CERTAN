@@ -19,7 +19,7 @@
 |---|---|---|---|
 | Nur Halimah | 123430075 | nur123430075-stack | Membuat Laporan |
 | Triya Wulandari | 123430024 | triya123430024-jpg | Membuat Laporan |
-| ✍️ | ✍️ | ✍️ | ✍️ |
+| Riya Dwi Sioni | 123430036 | riya123430036-png | mengedit coding colab |
 ## 1. Pertanyaan
 
 Augmentasi apa yang membantu U-Net menemukan polip pada citra kolonoskopi, dan augmentasi apa yang tidak? Kenapa?
