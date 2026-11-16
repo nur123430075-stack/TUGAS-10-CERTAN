@@ -101,26 +101,45 @@ dari hasil peta kesalahan secara keseluruhan, augmentasi Kecerahan & kontras mem
 
 ## 6. Pembahasan & kesimpulan
 
-<!-- Bandingkan hasil dengan hipotesis di Bagian 3. Hipotesis yang ternyata salah tetap bernilai,
-     asalkan dijelaskan kenapa. Perbedaan kecil (lebih kecil dari simpangan baku) belum tentu berarti. -->
+Pembahasan
 
-✍️
+Ringkasan perbandingan hipotesis di Bagian 3 dengan hasil yang kami amati dapat dilihat pada tabel di bawah ini:
+
+| Skenario | Hipotesis | Hasil yang diamati | Status |
+|---|---|---|---|
+| Flip | Dice naik karena model mengenali polip dari berbagai orientasi | Dice sama pada citra 1 dan 2 (0,00) dan turun 0,02 pada citra 3 dan 4 dibanding Tanpa augmentasi | Tidak terbukti |
+| Kecerahan & kontras | Dice naik karena model lebih tahan terhadap variasi pencahayaan | Naik pada citra 1 (0,00 menjadi 0,44), tertinggi pada citra 3, tidak berubah pada citra 2, sedikit turun pada citra 4 | Terbukti sebagian |
+
+Pada tabel Dice/IoU di Bagian 4, Dice rata-rata ± simpangan baku dari tiga ulangan adalah [ISI] untuk Tanpa augmentasi, [ISI] untuk Flip, dan [ISI] untuk Kecerahan & kontras. Selisih antarskenario [ISI: lebih besar / lebih kecil] daripada simpangan baku, sehingga perbedaannya [ISI: cukup meyakinkan / belum dapat dipastikan bermakna].
+
+Pada hasil yang didapatkan, flip hanya mencerminkan citra sehingga bentuk, warna, dan kontras polip tetap sama. Polip pada citra kolonoskopi sudah muncul pada berbagai posisi di data latih, jadi flip tidak menambah variasi yang benar-benar baru. Kegagalan pada citra 1 dan 2 berkaitan dengan kontras dan ukuran polip, bukan dengan orientasi, sehingga wajar bila flip tidak memperbaikinya. Ini adalah dugaan dari pengamatan peta kesalahan dan belum diuji dengan eksperimen terpisah.
+
+Pada citra 1, polip besar dan pucat bersebelahan dengan lumen yang sangat gelap sehingga kontrasnya ekstrem. Variasi kecerahan dan kontras saat pelatihan tampaknya membantu model menghadapi kondisi pencahayaan seperti ini, dan hanya skenario ini yang mulai menemukan polip tersebut. Namun pada citra 2, polip kecil yang warnanya mirip mukosa kemerahan tetap terlewat. Dugaan kami, perubahan kecerahan dan kontras mengubah seluruh citra secara merata sehingga tidak menambah perbedaan antara polip dan mukosa di sekitarnya. Artinya, augmentasi ini membantu untuk kesulitan yang disebabkan pencahayaan, tetapi tidak untuk kesulitan yang disebabkan oleh kemiripan warna.
+
+Penelitian Sánchez-Peralta dkk. (2020) melaporkan bahwa transformasi berbasis piksel seperti perubahan kecerahan dan kontras meningkatkan performa segmentasi polip pada dataset CVC-EndoSceneStill, sedangkan pada Kvasir-SEG transformasi geometri seperti rotasi dan shear memberi peningkatan yang lebih besar. Mereka juga menemukan bahwa menggabungkan semua transformasi tidak selalu lebih baik. Hasil kami sejalan dalam hal bahwa kecerahan dan kontras bermanfaat, tetapi berbeda dalam hal flip yang tidak memberi peningkatan. Perbedaan ini dapat berasal dari jenis transformasi (flip berbeda dari rotasi dan shear), arsitektur model, jumlah data latih, dan jumlah ulangan. Hal ini juga sejalan dengan gambaran umum dalam Shorten dan Khoshgoftaar (2019) bahwa augmentasi hanya efektif bila variasi yang ditambahkan memang sesuai dengan variasi yang muncul pada data nyata.
+
+Pada kolonoskopi, polip yang tidak terdeteksi (FN) lebih berbahaya daripada salah tandai (FP), karena polip yang terlewat dapat berkembang menjadi kanker (Leufkens dkk., 2012). Dalam pengamatan kami, polip kecil berkontras rendah (citra 2) terlewat oleh semua skenario, sehingga jenis polip ini perlu mendapat perhatian khusus bila model akan dikembangkan lebih lanjut. Augmentasi yang kami uji tampak mengurangi FP pada citra tersebut, tetapi belum menyelesaikan masalah FN.
+
+Kesimpulan
+1. Kecerahan & kontras membantu pada kasus yang sulit karena pencahayaan dan kontras (citra 1), tetapi tidak pada semua citra. Pada polip yang jelas dan berbatas tegas, perbedaannya sangat kecil.
+2. Flip tidak meningkatkan Dice pada contoh yang diamati karena hanya mencerminkan citra tanpa menambah variasi warna dan kontras, sementara sumber kegagalan model terletak pada kontras dan ukuran polip, bukan pada orientasi.
+3. Polip kecil dengan warna mirip mukosa (citra 2) tetap terlewat oleh semua skenario. Ini adalah jenis kesalahan yang paling berbahaya secara klinis.
+4. Kesimpulan ini berdasarkan empat citra contoh dan tiga ulangan, sehingga perlu dikonfirmasi dengan data yang lebih banyak.
 
 ## 7. Pembagian kerja
 
-| Nama | NIM | Username GitHub | Bagian yang dikerjakan | Contoh commit |
-|---|---|---|---|---|
-| Nur Halimah (ketua) | 123430075 | nur123430075-stack | Membuat repositori dan mengundang anggota; Menyusun laporan pada bagian 5 (peta kesalahan) dan bagian 7 (pembagian kerja); mengisi form pengumpulan. | "[pesan commit asli]" |
-| Triya Wulandari | 123430024 | triya123430024-jpg | Menyusun laporan pada bagian 6 (pembahasan dan kesimpulan) dan bagian 8 (penggunaan AI) | "[pesan commit asli]" |
-| Riya Dwi Sioni | 123430036 | riya123430036-png | Menjalankan eksperimen akhir; Menyusun laporan bagian 2 (data dan pengaturan); bagian 3 (skenario, augmentasi, dan hipotesis); dan bagian 4 (hasli) | "[pesan commit asli]" |
+| Nama | NIM | Username GitHub | Bagian yang dikerjakan |
+|---|---|---|---|
+| Nur Halimah (ketua) | 123430075 | nur123430075-stack | Membuat repositori dan mengundang anggota; Menyusun laporan pada bagian 5 (peta kesalahan) dan bagian 7 (pembagian kerja); mengisi form pengumpulan. |
+| Triya Wulandari | 123430024 | triya123430024-jpg | Menyusun laporan pada bagian 6 (pembahasan dan kesimpulan) dan bagian 8 (penggunaan AI) |
+| Riya Dwi Sioni | 123430036 | riya123430036-png | Menjalankan eksperimen akhir; Menyusun laporan bagian 2 (data dan pengaturan); bagian 3 (skenario, augmentasi, dan hipotesis); dan bagian 4 (hasli) |
 
 ## 8. Penggunaan AI
 
-<!-- Wajib diisi, walau tidak memakai AI (tulis "Tidak memakai AI").
-     Contoh: "Claude Code (CLI) untuk menulis skenario augmentasi dan memperbaiki error di Bagian 4.
-     Draf Bagian 6 ditulis sendiri, lalu dirapikan bahasanya dengan bantuan AI." -->
-
-✍️
+| Alat AI | Digunakan untuk |
+|---|---|
+| ChatGPT (GPT) | Memahami instruksi tugas, yaitu menjabarkan kalimat-kalimat pada perintah tugas ke dalam bahasa yang lebih mudah dipahami sehingga kami mengerti apa saja yang harus dikerjakan. |
+| Claude | Memahami aturan penggunaan terminal dan git (git pull, git add, git commit, git push, serta pemecahan masalah ketika terminal tidak bisa mengetik); membantu memahami cara menjalankan eksperimen di notebook; menjelaskan cara menganalisis hasil, yaitu membaca peta kesalahan, tabel Dice/IoU, serta jenis kesalahan FP dan FN; serta mencari referensi. |
 
 ## Cara menjalankan ulang
 
